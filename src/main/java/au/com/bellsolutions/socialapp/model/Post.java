@@ -1,10 +1,9 @@
 package au.com.bellsolutions.socialapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import javax.xml.stream.events.Comment;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +31,8 @@ public class Post implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "updated_at")
     private Date updatedAt = new Date();
+    // Need to use FetchType.LAZY to resolve multiple bags exception
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     public Post() {}
